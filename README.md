@@ -156,3 +156,57 @@ fetch('https://www.javascript.com/')
   })();
 
 ```
+
+# NPM: Node Package Manager
+Init. Creates `package.json` etc.
+```
+$ npm init
+```
+
+```
+$ npm i -D nodemon
+```
+`-D` means it is a "Dev Dependency" and not needed in production.
+
+Testing frameworks, formatting tools, etc. belong in "dev dependencies".
+
+```
+$ npm install --production
+```
+When only install "non dev".
+
+## Semantic Versioning (SemVer)
+
+`4.2.0`
+```
+4: Major - Breaking Changes
+2: Minor - Backward Compantible
+0: Patch - Bug Fixes. No new features. No breaking changes.
+```
+
+`~1.2.2`
+`~` Update can install most recent `patch` version. So is greater than or equal to:
+```
+1.2.4
+1.2.5
+1.2.6
+1.2.x
+```
+But not:
+```
+1.3.0
+```
+
+`^1.2.3`
+`^` More relaxed constraint. Get the most recent `minor` version (middle number).
+```
+1.3.0
+1.4.5
+```
+But not all the way to:
+```
+2.0.0
+```
+
+## Creating and Publishing an NPM Package
+... to do 
