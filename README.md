@@ -209,4 +209,79 @@ But not all the way to:
 ```
 
 ## Creating and Publishing an NPM Package
-... to do 
+
+Module exports
+```javascript
+//File path: `wenbert-frame-print/index.js`
+module.exports = function print(msg) {
+  console.log('**********');
+  console.log('msg');
+  console.log('**********');
+};
+```
+
+```javascript
+//File path: `index.js`
+const print = require('../fromt-print');
+print('Hello NPM!');
+/*
+Expected Output:
+
+**********
+Hello NPM!
+**********
+*/
+```
+
+By default, Node looks up `node_modules` but if it can't find it, it will look-up the relative path.
+
+The goal is to do:
+```
+$ npm install wenbert-frame-print
+```
+
+We put a prefix `wenbert` so that it will be unique in npmjs.com. Create an account in npmjs.com
+
+```
+$ npm login
+Username: wenbert
+Password:
+Email: (this IS public) wenbert@gmail.com
+Logged in as wenbert on https://registry.npmjs.org/.
+```
+
+Then create a package.json file.
+```
+$ npm init
+```
+Enter `wenbert-frame-print` or some unique string. Follow instructions / keep everything as default.
+
+Then finally:
+```
+$ npm publish
+```
+
+Now that you have package published, you can:
+```
+$ npm install wenbert-frame-print
+```
+
+It will download the package and place it inside the `node_modules` directory.
+
+### Useful NPM commands
+```
+$ npm ls
+```
+And
+```
+$ npm outdated
+```
+This will not update the package. 
+`Current` is what you have.
+`Wanted` is what you'll get when you `npm update`
+`Latest` is the latest version.
+
+Be careful, because even when it is only a patch level update, it might still introduce bugs in your code.
+
+# Next: Modules and Concurrency
+...
