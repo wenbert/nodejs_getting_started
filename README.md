@@ -284,4 +284,159 @@ This will not update the package.
 Be careful, because even when it is only a patch level update, it might still introduce bugs in your code.
 
 # Next: Modules and Concurrency
-...
+```javascript
+function dynamicArgsFunction() {
+  console.log(arguments);
+}
+
+dynamicArgsFunction(3, 7, 5, 4);
+
+// OUTPUT
+// $ node arguments.js
+// [Arguments] {'0': 3 ... '3':4}
+```
+
+Take this file with 1 line. And we run the file in Node. The output would not be "undefined". 
+```javascript
+// arguments.js
+console.log(arguments);
+```
+*Important*: Node internally wraps every file in a function, you would get some output here. As opposed to running this in a browser - you would get some kind of "undefined" message.
+
+Node does something like this:
+```javascript
+function (exports, module, require, __filename, __dirname) {
+  // Your code in arguments.js
+  console.log(arguments);
+
+  // So if you use exports.a = 42
+  // You are just using the param inside the wrapping function.
+  // That is why if you do:
+  let foo = 2;
+  // That does not become a global variable. It is only in the 
+  // scope of the wrapping function. 
+  // If that was done in a browser, that `foo` will be a global one.
+
+  exports.a = 42;
+  module.exports.b = 37;
+
+  exports = () => {} // NOT OK
+  module.exports = () => {}; // OK
+
+  // Returns for every file in the "wrapper". Node will always return
+  // this function. 
+  return module.exports;
+}
+```
+
+So if we do:
+```javascript
+const moduleApi = require('./arguments.js');
+// The result of the "require" call is really the "module.exports"
+// of "arguments.js" - which is what Node will always return in the background.
+console.log(moduleApi);
+```
+
+### Examples of Module APIs
+
+#### Object example
+```javascript
+// object.js
+// Top-level API is a simple object (no need to use module.exports)
+exports.language = 'English';
+
+exports.direction = 'RTL';
+
+exports.encoding = 'UTF-8';
+```
+
+Then we use it like:
+```javascript
+// use-objects.js
+const api = require('./object.');
+console.log(api.language, api.direction, api.encoding);
+```
+
+We run it, output is:
+```
+$ node use-object.js
+English RTL UTF-8
+```
+
+#### Array example
+```javascript
+// array.js
+// Top-level API is an array
+module.exports = [2, 3, 5, 7];
+```
+
+Then we use it:
+```javascript
+// use-array.js
+console.log(require('./array.js'));
+```
+
+Run it:
+```
+$ node use-array.js
+[2, 3, 5, 7]
+```
+
+#### String example
+We can also return a string.
+```javascript
+// string.js
+module.exports = `
+  <html>
+  <head>A title</head>
+  <body>Foo bar!</code>
+  </html>
+`;
+```
+
+We use it like so:
+```javascript
+// use-string.js
+const myTemplate = require('./string.js');
+console.log(myTemplate);
+```
+
+Output:
+```
+$ node use-string.js
+<html>
+<head>A title</head>
+<body>Foo bar!</code>
+</html>
+```
+
+Let say you want an HTML template but you want to pass in variables.
+You do it like this - by exporting a function.
+
+```javascript
+// string2.js
+module.exports = title = `
+  <html>
+  <head>${title}</head>
+  <body>Foo bar!</code>
+  </html>
+`;
+```
+
+We use it like so:
+```javascript
+// use-string2.js
+const templateGenerator = require('./string.js');
+const myTemplate = templateGenerator('Hello World!');
+console.log(myTemplate);
+```
+
+Output:
+```
+$ node use-string2.js
+<html>
+<head>Hello World!</head>
+<body>Foo bar!</code>
+</html>
+```
+
