@@ -1,3 +1,6 @@
+##### Table of Contents  
+[Headers](#headers) 
+
 # Node.js: Getting Started
 
 https://app.pluralsight.com/player?course=nodejs-getting-started&author=samer-buna&name=086f1e0a-2406-497a-8fb1-6cdcde24b8fb&clip=4
