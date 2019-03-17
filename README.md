@@ -8,15 +8,15 @@ Node.js Getting Started
 ...
 ...
 
-# Javascript review
-## Variables and block scopes
+## Javascript review
+### Variables and block scopes
 ```javascript
 var foo = 0;
 let foo = 0;
 const foo = 0;
 ```
 
-## Arrow functions
+### Arrow functions
 ```javascript
 const square = (a) => {
   return a * a;
@@ -28,7 +28,7 @@ const square = (a) => {
 [1, 2, 3, 4].map(a => a * a);
 ```
 
-## Object literals
+### Object literals
 ```javascript
 const obj = {
   p1: 10,
@@ -39,7 +39,7 @@ const obj = {
 
 ```
 
-## Destructuring and rest/spread
+### Destructuring and rest/spread
 ```javascript
 // const PI = Math.PI;
 // const E = Math.E;
@@ -82,7 +82,7 @@ const newObject = {
 
 ```
 
-## Template strings
+### Template strings
 ```javascript
 const greeting = "Hello World";
 
@@ -96,7 +96,7 @@ const html = `
 
 ```
 
-## Classes
+### Classes
 ```javascript
 class Person {
   constructor(name) {
@@ -129,7 +129,7 @@ o3.greet();
 
 ```
 
-## Promised and async/await
+### Promises and async/await
 ```javascript
 const https = require('https');
 
@@ -157,7 +157,7 @@ fetch('https://www.javascript.com/')
 
 ```
 
-# NPM: Node Package Manager
+## NPM: Node Package Manager
 Init. Creates `package.json` etc.
 ```
 $ npm init
@@ -283,7 +283,7 @@ This will not update the package.
 
 Be careful, because even when it is only a patch level update, it might still introduce bugs in your code.
 
-# Next: Modules and Concurrency
+## Next: Modules and Concurrency
 ```javascript
 function dynamicArgsFunction() {
   console.log(arguments);
@@ -337,9 +337,9 @@ const moduleApi = require('./arguments.js');
 console.log(moduleApi);
 ```
 
-### Examples of Module APIs
+## Examples of Module APIs
 
-#### Object example
+### Object example
 ```javascript
 // object.js
 // Top-level API is a simple object (no need to use module.exports)
@@ -363,7 +363,7 @@ $ node use-object.js
 English RTL UTF-8
 ```
 
-#### Array example
+### Array example
 ```javascript
 // array.js
 // Top-level API is an array
@@ -382,7 +382,7 @@ $ node use-array.js
 [2, 3, 5, 7]
 ```
 
-#### String example
+### String example
 We can also return a string.
 ```javascript
 // string.js
