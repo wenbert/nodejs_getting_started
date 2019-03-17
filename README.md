@@ -440,3 +440,64 @@ $ node use-string2.js
 </html>
 ```
 
+## Global Object
+```javascript
+// dir.js
+// console.dir() is like console.log() but only shows top-level items
+// We use console.dir() because `global` is a big object
+console.dir(global, {depth: 0});
+```
+Output is:
+```
+$ node dir.js
+Object [global] {
+  DTRACE_NET_SERVER_CONNECTION: [Function],
+  DTRACE_NET_STREAM_END: [Function],
+  DTRACE_HTTP_SERVER_REQUEST: [Function],
+  DTRACE_HTTP_SERVER_RESPONSE: [Function],
+  DTRACE_HTTP_CLIENT_REQUEST: [Function],
+  DTRACE_HTTP_CLIENT_RESPONSE: [Function],
+  global: [Circular],
+  process: [process],
+  Buffer: [Function],
+  clearInterval: [Function: clearInterval],
+  clearTimeout: [Function: clearTimeout],
+  setInterval: [Function: setInterval],
+  setTimeout: [Function],
+  clearImmediate: [Function: clearImmediate],
+  setImmediate: [Function] }
+```
+
+You can add/set something like:
+```javascript
+global.answer = 42;
+```
+LOL These are bad. Avoid global objects.
+
+## Event Loop
+...
+
+## Error vs. Exceptions
+```javascript
+const path = require('path');
+const fs = require('fs');
+
+const files = ['.bash_profile', 'kjkjhh', '.npmrc'];
+
+files.forEach(file => {
+  try {
+    const filePath = path.resolve(process.env.HOME, file);
+    const data = fs.readFileSync(filePath);
+    console.log('File data is', data);
+  } catch (err) {
+    if (err.code === 'ENOENT') {
+      console.log('File not found  ');
+    } else {
+      throw err;
+    }
+  }
+});
+```
+
+## Node Clusters
+... to be continued...
