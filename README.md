@@ -634,3 +634,149 @@ This is because `A` does not do anything. We emit before `Subscribing`.
 
 **Very simple yet very powerful. Because it allows modules to work together without depending on any APIs!**
 
+## Working with Web Servers
+The built-in HTTP module
+```javascript
+const http = require('http');
+
+const server = http.createServer((req, res) => {
+  res.end('Hello World\n');
+});
+
+server.listen(4242, () => {
+  console.log('Server is running...');
+});
+```
+
+Let's make that previous code snippet a bit more readable.
+```javascript
+const http = require('http');
+
+const requestListener = (req, res) => {
+  res.write('Hello World\n');
+  res.end();
+};
+
+// See previous topic about "Event Listeners" - this is exactly it!
+const server = http.createServer();
+server.on('request', requestListener);
+
+server.listen(4242, () => {
+  console.log('Server is running...');
+});
+```
+
+### Monitoring Files for Changes
+Because the event loop is constantly running, when you change something in the file above, the changes will not reflect unless you reload the script. ie: Stop then start.
+
+To go around this, we use a library called Nodemon. 
+
+```
+$ npm -i nodemon
+$ nodemon hello-world.js
+```
+
+Now, it will monitor the files for changes and then nodemon will reload the file/script.
+
+### The "req" and "res" Objects
+`console.log()` or `console.dir()` these lol!
+Keywords: `IncomingMessage` and `ServerReponse`
+
+`req` and `res` are streams! 
+`req` object is readable stream while the `res` object is a writable one.
+That means we can SUBSCRIBE to them!
+
+## Node Web Frameworks
+### ExpressJS Web Framework
+First steps:
+```
+$ npm init
+$ npm install express
+```
+
+```javascript
+// index.js
+const express = require('express');
+
+const server = express();
+
+// We don't define a single request listener.
+// We define MANY listeners - per URL
+
+server.get('/', (req, res) => {
+  res.send('Hello Express');
+});
+
+server.get('/bar', (req, res) => {
+  res.send('Hello Express');
+});
+
+
+server.listen(4242, () => {
+  console.log('Express Server is running...');
+});
+```
+
+```
+$ nodemon index.js
+...
+Express Server is running...
+```
+Then go to browser port 4242. And also `/bar`.
+
+### Template Languages
+Pug, Handlebars, EJS.
+```
+$ npm install express
+$ npm install ejs
+```
+```javascript
+// index.js
+const express = require('express');
+
+const server = express();
+
+// THIS!
+server.set('view engine', 'ejs');
+
+server.get('/', (req, res) => {
+  res.render('index');
+});
+
+server.get('/about', (req, res) => {
+  res.render('about');
+});
+
+server.listen(4242, () => {
+  console.log('Express Server is running...');
+});
+```
+
+Then inside `views` directory.
+```javascript
+// views/index.ejs
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>INDEX</title>
+</head>
+<body>
+  <h2>Hello EJS</h2>
+</body>
+</html>
+```
+And 
+```javascript
+// views/about.ejs
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>INDEX</title>
+</head>
+<body>
+  <h2>About...</h2>
+</body>
+</html>
+
+```
