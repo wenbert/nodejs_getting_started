@@ -1,5 +1,46 @@
 # Node.js: Getting Started
 
+- [Node.js: Getting Started](#nodejs--getting-started)
+  * [Javascript review](#javascript-review)
+    + [Variables and block scopes](#variables-and-block-scopes)
+    + [Arrow functions](#arrow-functions)
+    + [Object literals](#object-literals)
+    + [Destructuring and rest/spread](#destructuring-and-rest-spread)
+    + [Template strings](#template-strings)
+    + [Classes](#classes)
+    + [Promises and async/await](#promises-and-async-await)
+  * [NPM: Node Package Manager](#npm--node-package-manager)
+  * [Semantic Versioning (SemVer)](#semantic-versioning--semver-)
+  * [Creating and Publishing an NPM Package](#creating-and-publishing-an-npm-package)
+    + [Useful NPM commands](#useful-npm-commands)
+  * [Next: Modules and Concurrency](#next--modules-and-concurrency)
+  * [Examples of Module APIs](#examples-of-module-apis)
+    + [Object example](#object-example)
+    + [Array example](#array-example)
+    + [String example](#string-example)
+  * [Global Object](#global-object)
+  * [Event Loop](#event-loop)
+  * [Error vs. Exceptions](#error-vs-exceptions)
+  * [Node Clusters](#node-clusters)
+  * [Node's Asynchronous Patterns](#node-s-asynchronous-patterns)
+    + [Synchoronous](#synchoronous)
+    + [Callback function](#callback-function)
+    + [Nested Callback function](#nested-callback-function)
+    + [Promisify](#promisify)
+    + [Async await](#async-await)
+  * [Event Emitter](#event-emitter)
+  * [Working with Web Servers](#working-with-web-servers)
+    + [Monitoring Files for Changes](#monitoring-files-for-changes)
+    + [The "req" and "res" Objects](#the--req--and--res--objects)
+  * [Node Web Frameworks](#node-web-frameworks)
+    + [ExpressJS Web Framework](#expressjs-web-framework)
+    + [Template Languages](#template-languages)
+  * [Working with the Operating System](#working-with-the-operating-system)
+    + [Debugging:](#debugging-)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
+
 https://app.pluralsight.com/player?course=nodejs-getting-started&author=samer-buna&name=086f1e0a-2406-497a-8fb1-6cdcde24b8fb&clip=4
 
 Node.js Getting Started
