@@ -500,4 +500,137 @@ files.forEach(file => {
 ```
 
 ## Node Clusters
-... to be continued...
+* Master process can restart other workers when then have problems (?)
+* PM2 Tool for Production
+
+## Node's Asynchronous Patterns
+
+### Synchoronous
+```javascript
+const fs = require('fs');
+const data = fs.readFileSync(__filename);
+console.log('File data is', data);
+console.log('TEST');
+```
+
+### Callback function
+And
+```javascript
+const fs = require('fs');
+fs.readFile(__filename, function cb(err, data) {
+  console.log('File data is', data);
+});
+console.log('TEST');
+```
+Output:
+```
+TEST
+File data is: ....
+```
+That is first pass is `fs.readFile`, then `console.log()`. Then when the callback function is done, it calls the internal `console.log()` inside.
+
+### Nested Callback function
+```javascript
+const fs = require('fs');
+
+fs.readFile(__filename, function cb1(err, data) {
+  fs.writeFile(__filename + '.copy', data, function cb2(err) {
+    // Nest more callbacks here...
+  });
+});
+
+console.log('TEST');
+
+```
+
+### Promisify
+```javascript
+const fs = require('fs');
+const util = require('util');
+
+const readFile = util.promisify(fs.readFile);
+
+async function main() {
+  const data = await readFile(__filename);
+  console.log('File data is', data);
+}
+
+main();
+
+console.log('TEST');
+
+```
+
+Using built-in libraries for some libraries:
+```javascript
+const { readFile } = require('fs').promises;
+
+async function main() {
+  const data = await readFile(__filename);
+  console.log('File data is', data);
+}
+
+main();
+
+console.log('TEST');
+```
+
+Promises are better than callbacks. Easier, etc.
+
+### Async await
+```javascript
+const fs = require('fs').promises;
+
+async function main() {
+  const data = await fs.readFile(__filename);
+  await fs.writeFile(__filename + '.copy', data);
+  // More awaits here...
+}
+
+main();
+console.log('TEST');
+
+```
+
+## Event Emitter
+```javascript
+// example.js
+const EventEmitter = require('events');
+
+// Streams are Event Emitters
+// process.stdin, process.stdout
+
+const myEmitter = new EventEmitter();
+
+// This will not output anything. We "emit" before we Subscribe
+myEmitter.emit('TEST_EVENT');
+
+// If we want to do "emit" before the Subscription we can use 
+// setImmediate()
+setImmediate(() => {
+  myEmitter.emit('TEST_EVENT');
+});
+
+// Subscribe
+myEmitter.on('TEST_EVENT', () => {
+  console.log('TEST_EVENT was fired');
+});
+
+// This will "emit" the event so the callback in TEST_EVENT (Subscribe)
+// will get called.
+myEmitter.emit('TEST_EVENT');
+```
+
+Output:
+```
+$ node example.js 
+TEST_EVENT was fired
+TEST_EVENT was fired
+```
+This is because `A` does not do anything. We emit before `Subscribing`.
+`B` outputs the first `TEST_EVENT was fired` - due to `setImmediate()`
+`C` is we `Subscribe` to `TEST_EVENT` - this gets called when we `emit` something - in this case `TEST_EVENT`.
+`D` outpus the second `TEST_EVENT was fired` - we emit after we `Subscribed` to `TEST_EVENT`.
+
+**Very simple yet very powerful. Because it allows modules to work together without depending on any APIs!**
+
