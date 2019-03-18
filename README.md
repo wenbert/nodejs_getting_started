@@ -780,3 +780,101 @@ And
 </html>
 
 ```
+
+## Working with the Operating System
+The `os` module
+```javascript
+const os = require('os');
+console.log('OS platform:', os.platform());
+console.log('OS CPU architecture:', os.arch());
+console.log('# of logical CPU cores', os.cpus().length);
+console.log('Home directory for current user', os.homedir());
+console.log('line 1' + os.EOL + 'line 2' + os.EOL + 'line 3');
+```
+
+The `fs` module
+```javascript
+/*
+
+  readFile(path[, options])
+  createReadStream(path[, options])
+
+  writeFile(file, data[, options])
+  createWriteStream(path[, options])
+
+  appendFile(path, data[, options])
+  copyFile(src, dest[, flags])
+  stat(path[, options])
+  access(path[, mode]), chmod(path, mode), chown(path, uid, gid)
+  link(existingPath, newPath), unlink(path)
+  truncate(path[, len])
+
+  mkdir(path[, mode])
+  readdir(path[, options])
+  rmdir(path)
+  rename(oldPath, newPath)
+
+*/
+```
+
+The `cp` module
+```javascript
+const { spawn } = require('child_process');
+
+// Print Working Directory
+const pwd = spawn('pwd');
+pwd.stdout.pipe(process.stdout);
+
+// Read content of a file
+const { HOME } = process.env;
+const cat = spawn('cat', [`${HOME}/.bash_profile`]);
+cat.stdout.pipe(process.stdout);
+
+// List files
+const ls = spawn('ls', ['-l', '.']);
+ls.stdout.pipe(process.stdout);
+
+// Use Shell Syntax
+const shell = spawn('ls -al ~ | wc -l', { shell: true });
+shell.stdout.pipe(process.stdout);
+```
+
+### Debugging:
+```
+$ node --inspect-brk file.js
+```
+Then go to: `chrome://inspect` in your Chrome browser.
+Then you will see the node process inside "Targets". Then click on the "Inspect" link.
+
+You should see something like:
+```javascript
+function convertArrayToObject(arr) {
+  return arr.reduce((curr, acc) => {
+    acc[curr[0]] = curr[1];
+    return acc;
+  }, {});
+}
+
+const obj = convertArrayToObject([
+  [1, 'One'],
+  [2, 'Two'],
+  [3, 'Three'],
+  [4, 'Four'],
+  [5, 'Five'],
+]);
+
+console.log(obj);
+/* Should output:
+
+  {
+    1: 'One',
+    2: 'Two',
+    3: 'Three'
+    4: 'Four',
+    5: 'Five'
+  }
+
+*/
+```
+
+Put a `breakpoint` then click on `Play` button. You can hover on variables, etc.
