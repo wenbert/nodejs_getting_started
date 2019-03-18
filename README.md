@@ -1,5 +1,3 @@
-# Node.js: Getting Started
-
 - [Node.js: Getting Started](#nodejs--getting-started)
   * [Javascript review](#javascript-review)
     + [Variables and block scopes](#variables-and-block-scopes)
@@ -40,6 +38,8 @@
 
 <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
 
+
+# Node.js: Getting Started
 
 https://app.pluralsight.com/player?course=nodejs-getting-started&author=samer-buna&name=086f1e0a-2406-497a-8fb1-6cdcde24b8fb&clip=4
 
